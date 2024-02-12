@@ -9,14 +9,12 @@ on:
 jobs:
   tests:
     name: ${{ matrix.session }} ${{ matrix.python-version }}
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
-
-    env:
-      NOXSESSION: ${{ matrix.session }}
+        os: ["ubuntu-latest", "windows-latest"]
 
     steps:
       - name: Check out the repository
