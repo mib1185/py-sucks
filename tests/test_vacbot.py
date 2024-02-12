@@ -275,6 +275,16 @@ def test_error_event_subscription():
     v._handle_ctl({"event": "error", "error": "an_error_name"})
     mock.assert_called_once_with("an_error_name")
 
+    for err_code, err_msg in ERROR_CODES.items():
+        v._handle_ctl({"event": "error", "errno": err_code})
+        mock.assert_called_with(err_msg)
+
+    v._handle_ctl({"event": "error", "errno": "999"})
+    mock.assert_called_with("unknown")
+
+    v._handle_ctl({"event": "error"})
+    mock.assert_called_with("unknown")
+
     # Test unsubscribe
     mock = Mock()
     subscription = v.errorEvents.subscribe(mock)

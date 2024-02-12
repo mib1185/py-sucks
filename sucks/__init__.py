@@ -93,6 +93,15 @@ COMPONENT_FROM_ECOVACS = {
     'dust_case_heap': COMPONENT_FILTER
 }
 
+ERROR_CODES = {
+    "100": "Robot is operational",
+    "101": "Low battery",
+    "102": "Robot is stuck",
+    "103": "Wheels are not moving as expected",
+    "104": "Down sensor is getting abnormal values",
+    "110": "Dust Bin Not installed",
+}
+
 class EcoVacsAPI:
     CLIENT_KEY = "eJUWrzRv34qFSaYk"
     SECRET = "Cyu5jcR4zyK6QEPn1hdIGXB5QIDAQABMA0GC"
@@ -289,7 +298,9 @@ class VacBot():
             getattr(self, method)(ctl)
 
     def _handle_error(self, event):
-        error = event['error']
+        errno = event.get('errno')
+        if not errno or (error := ERROR_CODES.get(errno)) is None:
+            error = event.get('error', 'unknown')
         self.errorEvents.notify(error)
         _LOGGER.debug("*** error = " + error)
 
