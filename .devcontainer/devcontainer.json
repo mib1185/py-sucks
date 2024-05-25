@@ -1,0 +1,42 @@
+{
+  "name": "aiopegelonline Dev",
+  "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.9",
+  "containerEnv": {
+    "DEVCONTAINER": "1"
+  },
+  "runArgs": [
+    "-e",
+    "GIT_EDITOR=code --wait"
+  ],
+  "postCreateCommand": "pip3 install -e .[dev]",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.black-formatter",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint"
+      ],
+      "settings": {
+        "python.pythonPath": "/usr/local/bin/python",
+        "python.formatting.blackPath": "/usr/local/bin/black",
+        "python.formatting.provider": "black",
+        "python.testing.pytestArgs": [
+          "--no-cov",
+          "tests"
+        ],
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true,
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/usr/bin/zsh"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
+}
