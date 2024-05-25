@@ -1,12 +1,12 @@
 import hashlib
 import logging
+import re
 import time
 from base64 import b64decode, b64encode
 from collections import OrderedDict
 from threading import Event
 
 import requests
-import stringcase
 from sleekxmppfs import ClientXMPP, Callback, MatchXPath
 from sleekxmppfs.xmlstream import ET
 from sleekxmppfs.exceptions import XMPPError
@@ -100,6 +100,18 @@ ERROR_CODES = {
     "104": "Down sensor is getting abnormal values",
     "110": "Dust Bin Not installed",
 }
+
+
+def snakecase(string):
+    """Convert string into snake case.
+    derived from https://github.com/okunishinishi/python-stringcase
+    """
+    string = re.sub(r"[\-\.\s]", "_", str(string))
+    if not string:
+        return string
+    return string[0].lower() + re.sub(
+        r"[A-Z]", lambda matched: "_" + matched.group(0).lower(), string[1:]
+    )
 
 
 class EcoVacsAPI:
@@ -285,7 +297,6 @@ class VacBot:
         server_address=None,
         monitor=False,
     ):
-
         self.vacuum = vacuum
 
         # If True, the VacBot object will handle keeping track of all statuses,
@@ -532,7 +543,7 @@ class EcoVacsXMPP(ClientXMPP):
             result.update(xml[0].attrib)
 
         for key in result:
-            result[key] = stringcase.snakecase(result[key])
+            result[key] = snakecase(result[key])
         return result
 
     def register_callback(self, kind, function):
