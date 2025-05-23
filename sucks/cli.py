@@ -2,11 +2,19 @@ import configparser
 import itertools
 import os
 import platform
+import sys
 import random
 import re
 
-import click
-from pycountry_convert import country_alpha2_to_continent_code
+try:
+    import click
+    from pycountry_convert import country_alpha2_to_continent_code
+except ImportError:
+    print(
+        "The extra dependencies are missing, "
+        "please use 'pip install py-sucks[cli]' to install them."
+    )
+    sys.exit(1)
 
 from sucks import *
 

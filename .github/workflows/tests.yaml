@@ -9,7 +9,7 @@ on:
 jobs:
   tests:
     name: ${{ matrix.session }} ${{ matrix.python-version }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +31,7 @@ jobs:
         run: pip install pip
 
       - name: Setup
-        run: pip install -e .[dev]
+        run: pip install -e .[cli,dev]
 
       - name: Run Pytest
         run: pytest tests

@@ -48,16 +48,15 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         "sleekxmppfs>=1.4.1",
-        "click>=6",
         "requests>=2.18",
         "pycryptodome>=3.4",
-        "pycountry-convert>=0.5",
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
+        "cli": ["click>=6", "pycountry-convert>=0.5"],
         "dev": ["pytest", "requests-mock>=1.3"],
     },
     # If there are data files included in your packages that need to be
