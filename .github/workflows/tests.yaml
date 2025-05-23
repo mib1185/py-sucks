@@ -31,7 +31,7 @@ jobs:
         run: pip install pip
 
       - name: Setup
-        run: pip install -e .[dev]
+        run: pip install -e .[cli,dev]
 
       - name: Run Pytest
         run: pytest tests
