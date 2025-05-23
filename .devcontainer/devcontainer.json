@@ -8,7 +8,7 @@
     "-e",
     "GIT_EDITOR=code --wait"
   ],
-  "postCreateCommand": "pip3 install -e .[dev]",
+  "postCreateCommand": "pip3 install -e .[cli,dev]",
   "customizations": {
     "vscode": {
       "extensions": [

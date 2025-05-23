@@ -27,7 +27,8 @@ it's a vacuum.
 
 If you have a recent version of Python 3, you should be able to
 do `pip install py-sucks` to get the most recently released version of
-this.
+this. In order to use the command line (cli) tool, you need to install
+the additional cli requirements by `pip install py-sucks[cli]`
 
 ## Usage
 
