@@ -15,7 +15,7 @@ except FileNotFoundError:
 
 setup(
     name="py-sucks",
-    version="0.9.10",
+    version="0.9.11",
     description="a library for controlling certain robot vacuums",
     long_description=long_description,
     long_description_content_type="text/markdown",
