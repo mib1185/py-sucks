@@ -54,6 +54,61 @@ def test_xml_to_dict():
     assert x._ctl_to_dict(
         make_ctl('# <ctl td="LifeSpan" type="Brush" val="099" total="365"/>')
     ) == {"event": "life_span", "type": "brush", "val": "099", "total": "365"}
+    assert x._ctl_to_dict(
+        make_ctl('<ctl td="GetLifeSpan"><ctl type="Brush" val="099" total="365"/></ctl>')
+    ) == {"event": "life_span", "type": "brush", "val": "099", "total": "365"}
+    assert x._ctl_to_dict(
+        make_ctl('<ctl id="" ret="ok" errno="" type="Brush" val="021" total="365"/>')
+    ) == {
+        "id": "",
+        "ret": "ok",
+        "errno": "",
+        "type": "brush",
+        "val": "021",
+        "total": "365",
+        "event": "life_span",
+    }
+
+
+def test_xml_to_dict_for_legacy_nested_statuses():
+    x = make_ecovacs_xmpp()
+
+    assert x._ctl_to_dict(
+        make_ctl('<ctl ret="ok" errno=""><clean type="stop" speed="standard" /></ctl>')
+    ) == {
+        "ret": "ok",
+        "errno": "",
+        "event": "clean_report",
+        "type": "stop",
+        "speed": "standard",
+    }
+    assert x._ctl_to_dict(
+        make_ctl('<ctl ret="ok" errno=""><charge type="SlotCharging" /></ctl>')
+    ) == {
+        "ret": "ok",
+        "errno": "",
+        "event": "charge_state",
+        "type": "slot_charging",
+    }
+    assert x._ctl_to_dict(
+        make_ctl('<ctl ret="ok" errno=""><battery power="100" /></ctl>')
+    ) == {
+        "ret": "ok",
+        "errno": "",
+        "event": "battery_info",
+        "power": "100",
+    }
+    assert x._ctl_to_dict(
+        make_ctl('<ctl ret="ok" errno=""><ctl type="Brush" val="099" total="365" /></ctl>')
+    ) == {
+        "ret": "ok",
+        "errno": "",
+        "event": "life_span",
+        "type": "brush",
+        "val": "099",
+        "total": "365",
+    }
+    assert x._ctl_to_dict(make_ctl('<ctl ret="ok" errno="" />')) is None
 
 
 def make_ecovacs_xmpp():
